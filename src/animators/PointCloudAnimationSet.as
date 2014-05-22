@@ -38,7 +38,7 @@ package animators
 		public var positionData:Vector.<Number>;
 		
 		public var byteArrayOffset:int = 0;
-		public var numRegisters:int = 100;
+		public var numRegisters:int;
 		
 		/**
 		 * Returns the number of poses made available at once to the GPU animation code.
@@ -81,9 +81,9 @@ package animators
 			_numPoses = numPoses;
 			_blendMode = blendMode;
 			
-			vertexConstances[0] = 10;
+			vertexConstances[0] = 100;
 			vertexConstances[1] = (180 * Math.PI) / 10;
-			vertexConstances[2] = 2;//3;
+			vertexConstances[2] = 0;//3;
 			vertexConstances[3] = numRegisters;
 		}
 		
@@ -107,11 +107,11 @@ package animators
 			_uploadTangents = Boolean(_useTangents[pass]);
 			
 			var context : Context3D = stage3DProxy._context3D;
-			context.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 4, vertexConstances, 2);
+			context.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 2, vertexConstances, 1);
 			
 			if (positionData) {
 				
-				context.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 10, positionData, numRegisters);
+				context.setProgramConstantsFromVector(Context3DProgramType.VERTEX, 3, positionData, numRegisters);
 			}
 		}
 		
@@ -158,8 +158,6 @@ package animators
 		 */
 		private function getAbsoluteAGALCode(pass:MaterialPassBase, sourceRegisters:Vector.<String>, targetRegisters:Vector.<String>):String
 		{
-			Debug.active = true;
-			
 			var code:String = "// test\n";
 			var len:uint = sourceRegisters.length;
 			var useNormals:Boolean = Boolean(_useNormals[pass] = len > 1);
@@ -177,13 +175,13 @@ package animators
 			code += "mov v2.xyzw, vc[vt1.w].wwww \n"; // move rgb into v1
 			code += "add vt0.xy, vt0.xy, vc[vt1.w].xy \n"; // move z position back to 0
 			
-			code += "div vt6.x, vt0.x, vc4.y \n";
+			code += "div vt6.x, vt0.x, vc2.y \n";
 			code += "sin vt0.z, vt6.x \n";
-			code += "mul vt0.z, vt0.z, vc4.x \n";
-			code += "sub vt0.z, vt0.z, vc4.x \n";
+			code += "mul vt0.z, vt0.z, vc2.x \n";
+			code += "sub vt0.z, vt0.z, vc2.x \n";
 			
-			code += "mul vt6.y, vt1.w, vc4.z \n";
-			code += "sub vt0.z, vt0.z, vt6.y \n";
+			/*code += "mul vt6.y, vt1.w, vc2.z \n";
+			code += "add vt0.z, vt0.z, vt6.y \n";*/
 			
 			return code;
 		}

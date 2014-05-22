@@ -16,6 +16,8 @@ package worker
 		protected var backToMain:MessageChannel;
 		private var solver:Solver;
 		
+		private var _vec:Vector.<Vector.<Number>> = new Vector.<Vector.<Number>>();
+		
 		public function FluidWorker() 
 		{
 			
@@ -27,6 +29,8 @@ package worker
 			backToMain.send( { msg:"INIT_STARTED" } );
 			
 			solver = new Solver(_worker, mainToBack, backToMain);
+			
+			
 		}
 		
 		protected function onMainToBack(event:Event):void

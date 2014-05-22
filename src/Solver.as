@@ -4,9 +4,10 @@ package
 	import flash.geom.Point;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
+	import flash.utils.ByteArray;
 	import flash.utils.Endian;
-	import logging.FileLog;
-	import logging.Log;
+	//import logging.FileLog;
+	//import logging.Log;
 	import org.osflash.signals.Signal;
 	import ru.inspirit.utils.FluidSolver;
 	/**
@@ -44,6 +45,7 @@ package
 		private var index:int = 0;
 		private var sentObject:*;
 		private var returnObject:Object;
+		private var ba:ByteArray = new ByteArray();
 		
 		public function Solver(worker:Worker=null, mainToBack:MessageChannel=null, backToMain:MessageChannel=null) 
 		{
@@ -54,8 +56,8 @@ package
 				
 				index = worker.getSharedProperty("index");
 				
-				Log.saveDestination = FileLog.DESTINATION_DESKTOP;
-				Log.fileName = 'worker_' + index + ".txt";
+				//Log.saveDestination = FileLog.DESTINATION_DESKTOP;
+				//Log.fileName = 'worker_' + index + ".txt";
 				//Log.Trace(this, "TEST");
 				
 			}
@@ -111,7 +113,12 @@ package
 			if (backToMain){
 				var msgObject:Object = new Object();
 				msgObject.msg = 'UPDATE';
-				msgObject.vec = this.vec;
+				//msgObject.vec = vec;
+				
+				ba.clear();
+				ba.writeObject(vec);
+				msgObject.ba = ba;
+				
 				backToMain.send(msgObject);
 			}
 		}

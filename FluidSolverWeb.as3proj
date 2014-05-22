@@ -8,9 +8,9 @@
     <movie fps="60" />
     <movie width="800" />
     <movie height="600" />
-    <movie version="4" />
-    <movie minorVersion="0" />
-    <movie platform="AIR" />
+    <movie version="11" />
+    <movie minorVersion="9" />
+    <movie platform="Flash Player" />
     <movie background="#FFFFFF" />
   </output>
   <!-- Other classes to be compiled into your SWF -->
@@ -42,7 +42,7 @@
     <option linkReport="" />
     <option loadExterns="" />
     <option staticLinkRSL="True" />
-    <option additional="-swf-version=25" />
+    <option additional="" />
     <option compilerConstants="" />
     <option minorVersion="" />
   </build>
@@ -52,8 +52,8 @@
   </includeLibraries>
   <!-- SWC Libraries -->
   <libraryPaths>
-    <element path="lib\as3-signals-v0.9-BETA.swc" />
     <element path="lib\away3d-core-fp11_4_1_6.swc" />
+    <element path="lib\as3-signals-v0.9-BETA.swc" />
   </libraryPaths>
   <!-- External Libraries -->
   <externalLibraryPaths>
@@ -86,8 +86,8 @@
   <!-- Other project options -->
   <options>
     <option showHiddenPaths="False" />
-    <option testMovie="Custom" />
-    <option testMovieCommand="file:///P:/Work/2014/Portfolio/agal-fluid-solver-demo/bin/index.html" />
+    <option testMovie="Default" />
+    <option testMovieCommand="" />
   </options>
   <!-- Plugin storage -->
   <storage>

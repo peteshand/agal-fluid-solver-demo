@@ -2,11 +2,13 @@ package
 {
 	import flash.display.Stage;
 	import flash.events.Event;
+	import flash.net.registerClassAlias;
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
 	import flash.system.WorkerDomain;
-	import logging.FileLog;
-	import logging.Log;
+	import flash.utils.ByteArray;
+	//import logging.FileLog;
+	//import logging.Log;
 	import org.osflash.signals.Signal;
 	/**
 	 * ...
@@ -19,10 +21,20 @@ package
 		private var backToMain:MessageChannel;
 		private var sentObject:*;
 		
+		//private var _vec:Vector.<Vector.<Number>> = new Vector.<Vector.<Number>>();
+		private var ba:ByteArray = new ByteArray();
+		
 		private var _vec:Vector.<Vector.<Number>> = new Vector.<Vector.<Number>>();
+		public var _vec2:Vector.<Number> = new Vector.<Number>();
 		
 		public function WorkerSolver(stage:Stage) 
 		{
+			
+			/*for (var i:int = 0; i < BaseSolver.batches; i++) 
+			{
+				_vec.push(new Vector.<Number>());
+			}*/
+			
 			worker = WorkerDomain.current.createWorker(stage.loaderInfo.bytes, true);
 			
 			mainToBack = Worker.current.createMessageChannel(worker);
@@ -34,10 +46,9 @@ package
 			
 			worker.setSharedProperty("index", 0);
 			//worker.setSharedProperty("dataBytes", numRegisters);
-			Log.saveDestination = FileLog.DESTINATION_DESKTOP;
-			Log.fileName = "mainTest.txt";
+			//Log.saveDestination = FileLog.DESTINATION_DESKTOP;
+			//Log.fileName = "mainTest.txt";
 			//Log.Trace(this, "TEST");
-			
 			
 			worker.start();
 		}
@@ -51,7 +62,9 @@ package
 				//Log.Trace(this, "sentObject.msg = " + sentObject.msg);
 				//var msg2:* = backToMain.receive();
 				if (sentObject.msg == "UPDATE") {
-					_vec = Vector.<Vector.<Number>>(sentObject.vec);
+					//_vec2 = sentObject.vec;
+					ba = sentObject.ba;
+					_vec = Vector.<Vector.<Number>>(ba.readObject());
 					onUpdate.dispatch();
 				}
 				/*else if (sentObject.msg == "ENCODE_COMPLETE") 

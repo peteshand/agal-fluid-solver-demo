@@ -53,6 +53,7 @@
 		private var v2:Number;
 		private var m:Number;
 		private var rgb:Object;
+		private var i:int;
 		
 		public function update(bmp:BitmapData, lines:Boolean):void
 		{
@@ -70,10 +71,10 @@
 					c = a << 24 | a << 16 | a << 8 | a;
 				}
 				
-				vec[batchCount][particleCount++] = p.x;
-				vec[batchCount][particleCount++] = -p.y;
+				vec[batchCount][particleCount++] = int(p.x*10)/10;
+				vec[batchCount][particleCount++] = int(-p.y*10)/10;
 				vec[batchCount][particleCount++] = 0;
-				vec[batchCount][particleCount++] = p.alpha;
+				vec[batchCount][particleCount++] = int(p.alpha*100)/100;
 				
 				if (particleCount >= particlesPerBatch * 4) {
 					particleCount = 0;

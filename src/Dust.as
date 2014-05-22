@@ -17,7 +17,7 @@ package
 	import flash.system.MessageChannel;
 	import flash.system.Worker;
 	import flash.system.WorkerDomain;
-	import logging.Log;
+	CONFIG::air import logging.Log;
 	import ru.inspirit.utils.FluidSolver;
 	
 	/**
@@ -28,9 +28,9 @@ package
 	{
 		private var container:ObjectContainer3D;
 		
-		private var batches:int = 100;
-		private var particlesPerBatch:int = 100;
-		private var numOfParticles:uint = particlesPerBatch * batches;
+		private var batches:int;
+		private var particlesPerBatch:int;
+		private var numOfParticles:uint;
 		
 		
 		
@@ -72,7 +72,7 @@ package
 		private var mouseMoved:int = 60 * timeout;
 		private var mouseLoc:Point = new Point();
 		
-		private var useWorkers:Boolean = true;
+		private var useWorkers:Boolean = false;
 		private var broadcaster:Sprite;
 		
 		public function Dust(stage:Stage) 
@@ -112,7 +112,7 @@ package
 			else solver = new Solver();
 			
 			solver.onInit.add(OnInit);
-			//solver.onUpdate.add(OnUpdate);
+			solver.onUpdate.add(OnUpdate);
 			
 			batches = BaseSolver.batches;
 			particlesPerBatch = BaseSolver.particlesPerBatch;
@@ -135,7 +135,7 @@ package
 		{
 			for (var j:int = 0; j < batches * 1; j++) 
 			{
-				var particleBatch:ParticleBatch = new ParticleBatch();
+				var particleBatch:ParticleBatch = new ParticleBatch(particlesPerBatch);
 				container.addChild(particleBatch);
 				particleBatchs.push(particleBatch);
 			}
@@ -180,13 +180,13 @@ package
 			mouseMoved++;
 			
 			solver.Update();
-			/*
+			
 		}
 		
 		
 		private function OnUpdate():void 
 		{
-			Log.Trace(this, "OnUpdate");*/
+			//Log.Trace(this, "OnUpdate");
 			
 			drawParticlesBitmap();
 		}

@@ -39,7 +39,7 @@ package
 			return _bokeh1;
 		}
 		
-		public function ParticleBatch() 
+		public function ParticleBatch(particlesPerBatch:int) 
 		{
 			super();
 			
@@ -53,11 +53,15 @@ package
 				pointGeo = new PlaneGeometry(4, 4, 1, 1, false);
 				
 				var mergeContainer:ObjectContainer3D = new ObjectContainer3D();
-				for (var i:int = 0; i < 100; ++i)
+				for (var i:int = 0; i < particlesPerBatch; ++i)
 				{
-					var mesh:Mesh = new Mesh(pointGeo.clone(), null);
-					mesh.z = 10 + i;
-					mergeContainer.addChild(mesh);
+					for (var j:int = 0; j < 1; j++) 
+					{
+						var mesh:Mesh = new Mesh(pointGeo.clone(), null);
+						mesh.z = 10 + i;
+						mergeContainer.addChild(mesh);
+					}
+					
 				}
 				
 				sharedContainer = new Mesh(pointGeo, pointMaterial);
@@ -71,7 +75,7 @@ package
 			container = new Mesh(sharedContainer.geometry.clone(), pointMaterial);
 			addChild(container);
 			
-			pointCloudAnimationSet = new PointCloudAnimationSet(100);
+			pointCloudAnimationSet = new PointCloudAnimationSet(particlesPerBatch);
 			container.animator = new PointCloudAnimator(pointCloudAnimationSet);
 			
 			pointMaterial.addMethod(new PixelMethod());

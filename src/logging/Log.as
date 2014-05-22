@@ -39,7 +39,7 @@ package logging
 		static public function get fileName():String 
 		{
 			if (CONFIG::air) return FileLog.LogFileName;
-			return -1;
+			return "-1";
 		}
 	}
 }
