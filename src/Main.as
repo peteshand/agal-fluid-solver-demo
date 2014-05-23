@@ -4,6 +4,8 @@ package
 	import away3d.containers.View3D;
 	import away3d.debug.AwayStats;
 	import flash.display.Sprite;
+	import flash.display.StageAlign;
+	import flash.display.StageScaleMode;
 	import flash.events.Event;
 	import flash.system.Worker;
 	import worker.FluidWorker;
@@ -24,6 +26,9 @@ package
 		{
 			if (stage) init();
 			else addEventListener(Event.ADDED_TO_STAGE, init);
+			
+			stage.align = StageAlign.TOP_LEFT;
+			stage.scaleMode = StageScaleMode.NO_SCALE;
 		}
 		
 		private function init(e:Event = null):void 
@@ -42,8 +47,8 @@ package
 		{
 			view = new View3D();
 			addChild(view);
-			view.antiAlias = 4;
-			view.backgroundColor = 0x222222;
+			view.antiAlias = 0;
+			view.backgroundColor = 0x000000;
 			
 			var awayStats:AwayStats = new AwayStats(view);
 			addChild(awayStats);

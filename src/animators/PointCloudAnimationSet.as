@@ -158,6 +158,8 @@ package animators
 		 */
 		private function getAbsoluteAGALCode(pass:MaterialPassBase, sourceRegisters:Vector.<String>, targetRegisters:Vector.<String>):String
 		{
+			Debug.active = true;
+			
 			var code:String = "// test\n";
 			var len:uint = sourceRegisters.length;
 			var useNormals:Boolean = Boolean(_useNormals[pass] = len > 1);
@@ -175,13 +177,10 @@ package animators
 			code += "mov v2.xyzw, vc[vt1.w].wwww \n"; // move rgb into v1
 			code += "add vt0.xy, vt0.xy, vc[vt1.w].xy \n"; // move z position back to 0
 			
-			code += "div vt6.x, vt0.x, vc2.y \n";
+			/*code += "div vt6.x, vt0.x, vc2.y \n";
 			code += "sin vt0.z, vt6.x \n";
 			code += "mul vt0.z, vt0.z, vc2.x \n";
-			code += "sub vt0.z, vt0.z, vc2.x \n";
-			
-			/*code += "mul vt6.y, vt1.w, vc2.z \n";
-			code += "add vt0.z, vt0.z, vt6.y \n";*/
+			code += "sub vt0.z, vt0.z, vc2.x \n";*/
 			
 			return code;
 		}

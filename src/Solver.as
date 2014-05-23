@@ -18,26 +18,25 @@ package
 	{
 		public var fSolver:FluidSolver;
 		private var forceSpeed:Number;
-		public var sw:uint = 1080;
-		public var sh:uint = 500;
-		public const FLUID_WIDTH:uint = 60;
-		public var isw:Number = 1 / sw;
-		public var ish:Number = 1 / sh;
+		public var sw:uint;
+		public var sh:uint;
+		public var isw:Number;
+		public var ish:Number;
 		
 		public var particleManager:ParticleManager;
 		
 		public var mx:uint = 0;
 		public var my:uint = 0;
-		public var aspectRatio:Number = sw * ish;
-		public var aspectRatio2:Number = aspectRatio * aspectRatio;
+		public var aspectRatio:Number;
+		public var aspectRatio2:Number;
 		private var forceIndex:int;
 		private var velocityMult:Number = 20.0;
 		
 		private var prevMouse:Point = new Point();
-		private var NormX:Number = NormX = 0 * isw;
-		private var NormY:Number = NormY = 0 * ish;
-		private var VelX:Number = (0 - prevMouse.x) * isw;
-		private var VelY:Number = (0 - prevMouse.y) * ish;
+		private var NormX:Number = 0;
+		private var NormY:Number = 0;
+		private var VelX:Number;
+		private var VelY:Number;
 		
 		private var worker:Worker;
 		private var mainToBack:MessageChannel;
@@ -49,6 +48,21 @@ package
 		
 		public function Solver(worker:Worker=null, mainToBack:MessageChannel=null, backToMain:MessageChannel=null) 
 		{
+			this.worker = worker;
+			this.mainToBack = mainToBack;
+			this.backToMain = backToMain;
+			
+			sw = Settings.width;
+			sh = Settings.height;
+			isw = 1 / sw;
+			ish = 1 / sh;
+			
+			aspectRatio = sw * ish;
+			aspectRatio2 = aspectRatio * aspectRatio;
+			
+			VelX = -prevMouse.x * isw;
+			VelY = -prevMouse.y * ish;
+			
 			if (worker) {
 				this.backToMain = backToMain;
 				this.mainToBack = mainToBack;
@@ -62,11 +76,11 @@ package
 				
 			}
 			
-			fSolver = new FluidSolver( FLUID_WIDTH, int( FLUID_WIDTH * sh / sw ) );
+			fSolver = new FluidSolver( Settings.FLUID_WIDTH, int( Settings.FLUID_WIDTH * sh / sw ) );
 			fSolver.rgb = false;
-			fSolver.fadeSpeed = .007;
-			fSolver.deltaT = .3;
-			fSolver.viscosity = 0.001;
+			fSolver.fadeSpeed = Settings.fadeSpeed;
+			fSolver.deltaT = Settings.deltaT;
+			fSolver.viscosity = Settings.viscosity;
 			
 			particleManager = new ParticleManager(this, particlesPerBatch, batches);
 			

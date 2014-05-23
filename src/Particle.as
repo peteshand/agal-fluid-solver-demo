@@ -98,6 +98,9 @@
 			vel *= 3;
 			alpha = vel;
 			
+			/*alpha *= 0.3;
+			alpha = Math.pow(alpha, 5);*/
+			
 			//vel *= 0.2;
 			//alpha = 0.05 + vel;
 		}

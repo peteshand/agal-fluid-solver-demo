@@ -48,9 +48,8 @@ package
 			pointMaterial.alphaBlending = true;
 			pointMaterial.blendMode = BlendMode.ADD;
 			
-			
 			if (!sharedContainer){
-				pointGeo = new PlaneGeometry(4, 4, 1, 1, false);
+				pointGeo = new PlaneGeometry(Settings.particleSize, Settings.particleSize, 1, 1, false);
 				
 				var mergeContainer:ObjectContainer3D = new ObjectContainer3D();
 				for (var i:int = 0; i < particlesPerBatch; ++i)
@@ -84,6 +83,7 @@ package
 		
 		public function set vec(value:Vector.<Number>):void 
 		{
+			trace("value = " + value);
 			pointCloudAnimationSet.positionData = value;
 		}
 	}

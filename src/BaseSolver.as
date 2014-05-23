@@ -7,7 +7,7 @@ package
 	 */
 	public class BaseSolver 
 	{
-		public static var batches:int = 100;
+		public static var batches:int = Settings.batches;
 		public static var particlesPerBatch:int = 125;
 		public static var numOfParticles:uint = particlesPerBatch * batches;
 		

@@ -72,7 +72,6 @@ package
 		private var mouseMoved:int = 60 * timeout;
 		private var mouseLoc:Point = new Point();
 		
-		private var useWorkers:Boolean = false;
 		private var broadcaster:Sprite;
 		
 		public function Dust(stage:Stage) 
@@ -108,7 +107,7 @@ package
 			
 			
 			
-			if (useWorkers && CONFIG::release) solver = new WorkerSolver(stage);
+			if (Settings.useWorkers && CONFIG::release) solver = new WorkerSolver(stage);
 			else solver = new Solver();
 			
 			solver.onInit.add(OnInit);
